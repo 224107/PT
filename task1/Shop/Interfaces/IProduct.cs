@@ -6,6 +6,7 @@ namespace Data.Interfaces
     {
         List<Product> GetAllProduct();
         List<Product> GetAvailableProducts();
+        ProductsState GetProductsState();
         Product GetProductById(int id);
         int GetProductAmountById(int id);
         void AddProduct(Product product);

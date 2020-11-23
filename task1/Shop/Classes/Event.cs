@@ -4,28 +4,26 @@ namespace Data
 {
     public abstract class Event
     {
-        public int Id { get; set; }
-        public ProductsAvaibility ProductsQty { get; set; }
+        public ProductsState ProductsState { get; set; }
         public DateTime Date { get; set; }
-
-        public Event(int id, DateTime date)
+        public Event(DateTime date, ProductsState productsState)
         {
-            Id = id;
             Date = date;
+            ProductsState = productsState;
         }
     }
     public class Sale : Event
     {
         public Customer Customer { get; set; }
 
-        public Sale(int id, DateTime date, Customer customer) : base(id, date)
+        public Sale(Customer customer, DateTime date, ProductsState productsState) : base(date,  productsState)
         {
             Customer = customer;
         }
     }
     public class Supply : Event
     {
-        public Supply(int id, DateTime date) : base(id, date)
+        public Supply(DateTime date, ProductsState productsState) : base(date,  productsState)
         {
         }
     }

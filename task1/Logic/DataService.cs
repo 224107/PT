@@ -23,7 +23,7 @@ namespace Logic
         {
             return customerRepository.GetAllCustomers();
         }
-        public Customer GetCustomerbyId(int id)
+        public Customer GetCustomerById(int id)
         {
             return customerRepository.GetCustomerById(id);
         }
@@ -50,33 +50,27 @@ namespace Logic
             else
                 return eventRepository.GetAllEvents();
         }
-        public Event GetEventByID(int id)
+      
+        public void AddSale(Product product, Customer customer, int qty)
         {
-            return eventRepository.GetEventById(id);
-        }
-        public void AddSale(int id, int productId, int customerId, int qty)
-        {
-            Product product = productRepository.GetProductById(productId);
-            Customer customer = customerRepository.GetCustomerById(customerId);
-            if (productRepository.GetProductAmountById(id) < qty)
+            if (productRepository.GetProductAmountById(product.Id) < qty)
                 throw new Exception("There's no Product available");
             else
             {
                 productRepository.ReduceAmountOfProduct(product, qty);
-                Sale saleEvent = new Sale(id, DateTime.Now, customer);
+                Sale saleEvent = new Sale(customer, DateTime.Today, productRepository.GetProductsState());
                 eventRepository.AddEvent(saleEvent);
             }
         }
-        public void AddSupply(int id, int productId, int qty)
+        public void AddSupply(Product product, int qty)
         {
-            Product product = productRepository.GetProductById(productId);
             productRepository.IncreaseAmountOfProduct(product, qty);
-            Supply supply = new Supply(id, DateTime.Now);
+            Supply supply = new Supply(DateTime.Today, productRepository.GetProductsState());
             eventRepository.AddEvent(supply);
         }
-        public void DeleteEvent(int id)
+        public void DeleteEvent(Event @event)
         {
-            eventRepository.DeleteEvent(id);
+            eventRepository.DeleteEvent(@event);
         }
 
         //Product Service

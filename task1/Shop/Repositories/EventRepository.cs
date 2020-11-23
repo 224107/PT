@@ -15,30 +15,20 @@ namespace Logic
         }
         public void AddEvent(Event @event)
         {
-            Data.Events().Add(@event);
+            Data.Events.Add(@event);
         }
 
-        public void DeleteEvent(int id)
+        public void DeleteEvent(Event @event)
         {
-            Data.Events().Remove(GetEventById(id));
+            Data.Events.Remove(@event);
         }
 
         public List<Event> GetAllEvents()
         {
-            if (Data.Events().Count == 0)
+            if (Data.Events.Count == 0)
                 throw new Exception("There's no events");
             else
-                return Data.Events();
-        }
-
-        public Event GetEventById(int id)
-        {
-            for (int i = 0; i < Data.Events().Count; i++)
-            {
-                if (Data.Events()[i].Id == id)
-                    return Data.Events()[i];
-            }
-            throw new Exception("There's no event with such id");
+                return Data.Events;
         }
     }
 }

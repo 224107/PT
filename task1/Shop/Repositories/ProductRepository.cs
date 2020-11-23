@@ -15,28 +15,29 @@ namespace Logic
         }
         public void AddProduct(Product product)
         {
-            Data.Products().Add(product);
+            Data.ProductsCatalog.Products.Add(product);
+            Data.ProductsState.AvailableProducts.Add(product, 0);
         }
 
         public void DeleteProduct(int id)
         {
-            Data.Products().Remove(GetProductById(id));
+            Data.ProductsCatalog.Products.Remove(GetProductById(id));
         }
 
         public List<Product> GetAllProduct()
         {
-            if (Data.Products().Count == 0)
+            if (Data.ProductsCatalog.Products.Count == 0)
                 throw new Exception("There's no products");
             else
-                return Data.Products();
+                return Data.ProductsCatalog.Products;
         }
 
         public Product GetProductById(int id)
         {
-            for (int i = 0; i < Data.Products().Count; i++)
+            for (int i = 0; i < Data.ProductsCatalog.Products.Count; i++)
             {
-                if (Data.Products()[i].Id == id)
-                    return Data.Products()[i];
+                if (Data.ProductsCatalog.Products[i].Id == id)
+                    return Data.ProductsCatalog.Products[i];
             }
             throw new Exception("There's no product with such id");
         }
@@ -50,9 +51,9 @@ namespace Logic
         public List<Product> GetAvailableProducts()
         {
             List<Product> AvailableProducts = new List<Product>();
-            foreach (KeyValuePair<Product, int> qty in Data.ProductsQty())
+            foreach (KeyValuePair<Product, int> qty in Data.ProductsState.AvailableProducts)
             {
-                if (qty.Value != 0)
+                if (qty.Value > 0)
                     AvailableProducts.Add(qty.Key);
             }
             return AvailableProducts;
@@ -60,9 +61,9 @@ namespace Logic
 
         public int GetProductAmountById(int id)
         {
-            if (Data.ProductsQty().ContainsKey(GetProductById(id)))
+            if (Data.ProductsState.AvailableProducts.ContainsKey(GetProductById(id)))
             {
-                return Data.ProductsQty()[GetProductById(id)];
+                return Data.ProductsState.AvailableProducts[GetProductById(id)];
             }
             throw new Exception("There's no product with such id");
 
@@ -70,18 +71,23 @@ namespace Logic
 
         public void IncreaseAmountOfProduct(Product product, int amount)
         {
-            if (Data.ProductsQty().ContainsKey(product))
+            if (Data.ProductsState.AvailableProducts.ContainsKey(product))
             {
-                Data.ProductsQty()[product] = GetProductAmountById(product.Id) + amount;
+                Data.ProductsState.AvailableProducts[product] = GetProductAmountById(product.Id) + amount;
             }
         }
 
         public void ReduceAmountOfProduct(Product product, int amount)
         {
-            if (Data.ProductsQty().ContainsKey(product))
+            if (Data.ProductsState.AvailableProducts.ContainsKey(product))
             {
-                Data.ProductsQty()[product] = GetProductAmountById(product.Id) - amount;
+                Data.ProductsState.AvailableProducts[product] = GetProductAmountById(product.Id) - amount;
             }
+        }
+
+        public ProductsState GetProductsState()
+        {
+            return Data.ProductsState;
         }
     }
 }

@@ -15,16 +15,16 @@ namespace Logic
         }
         public Customer GetCustomerById(int id)
         {
-            for (int i = 0; i < Data.Customers().Count; i++)
+            for (int i = 0; i < Data.Customers.Count; i++)
             {
-                if (Data.Customers()[i].Id == id)
-                    return Data.Customers()[i];
+                if (Data.Customers[i].Id == id)
+                    return Data.Customers[i];
             }
             throw new Exception("There's no customer with such id");
         }
         public void AddCustomer(Customer customer)
         {
-            Data.Customers().Add(customer);
+            Data.Customers.Add(customer);
         }
 
         public void UpdateCustomer(Customer customer)
@@ -34,16 +34,15 @@ namespace Logic
         }
         public void DeleteCustomer(int id)
         {
-            Data.Customers().Remove(GetCustomerById(id));
+            Data.Customers.Remove(GetCustomerById(id));
         }
 
         public List<Customer> GetAllCustomers()
         {
-
-            if (Data.Customers().Count == 0)
+            if (Data.Customers.Count == 0)
                 throw new Exception("There's no customers");
             else
-                return Data.Customers();
+                return Data.Customers;
         }
     }
 }

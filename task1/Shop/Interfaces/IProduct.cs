@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Data.Interfaces
+namespace Data
 {
     public interface IProduct
     {

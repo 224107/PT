@@ -15,5 +15,6 @@ namespace Data
             ProductsCatalog = new ProductsCatalog();
             ProductsState = new ProductsState(ProductsCatalog);                     
         }
+
     }
 }

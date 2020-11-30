@@ -1,8 +1,8 @@
-﻿using Data.Interfaces;
+﻿using Data;
 using System;
 using System.Linq;
 
-namespace Data
+namespace DataUnitTests
 {
     public class RandomExampleData : IDataGenerator
     {

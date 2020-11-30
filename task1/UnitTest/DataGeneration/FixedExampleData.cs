@@ -1,7 +1,7 @@
-﻿using Data.Interfaces;
+﻿using Data;
 using System;
 
-namespace Data
+namespace DataUnitTests
 {
     public class FixedExampleData : IDataGenerator
     {

@@ -1,36 +1,30 @@
 ﻿using Data;
-using Data.Interfaces;
 using Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 
-namespace DataUnitTests
+namespace LogicUnitTests
 {
     [TestClass]
     public class ProductRepositoryTest
     {
         private IProduct repository;
         private DataContext data;
-        private IDataGenerator generator;
 
         [TestInitialize]
         public void Initialize()
         {
             data = new DataContext();
             repository = new ProductRepository(data);
-            generator = new FixedExampleData();
-            //generator = new RandomExampleData();
-            generator.GenerateData(data);
         }
 
         [TestMethod]
         public void AddProductTest()
         {
             Product product = new Product(101, "Paint", 23.23);
-            Assert.AreEqual(4, repository.GetAllProduct().Count);
             repository.AddProduct(product);
-            Assert.AreEqual(5, repository.GetAllProduct().Count);
+            Assert.AreEqual(1, repository.GetAllProduct().Count);
         }
 
         [TestMethod]
@@ -45,11 +39,11 @@ namespace DataUnitTests
         [TestMethod]
         public void UpdateProductTest()
         {
-            Product product = repository.GetAllProduct().First();
-            Product productUpdated = new Product(product.Id, "Paint", 23.23);
+            Product product = new Product(101, "Paint", 23.23);
+            Product productUpdated = new Product(product.Id, "Hi-Fi",  999.33);
+            repository.AddProduct(product);
             Assert.AreEqual(product, repository.GetProductById(product.Id));
             repository.UpdateProduct(productUpdated);
-            Assert.AreEqual(product, repository.GetProductById(product.Id));
             Assert.AreEqual(productUpdated.Name, repository.GetProductById(product.Id).Name);
             Assert.AreEqual(productUpdated.Price, repository.GetProductById(product.Id).Price);
         }
@@ -57,16 +51,18 @@ namespace DataUnitTests
         [TestMethod]
         public void DeleteProductTest()
         {
-            Product product = repository.GetAllProduct().First();
-            Assert.AreEqual(4, repository.GetAllProduct().Count);
-            repository.DeleteProduct(product.Id);
-            Assert.AreEqual(3, repository.GetAllProduct().Count);
+            Product product1 = new Product(101, "Paint", 23.23);
+            Product product2 = new Product(102, "Hi-Fi", 999.33);
+            repository.AddProduct(product1);
+            repository.AddProduct(product2);
+            Assert.AreEqual(2, repository.GetAllProduct().Count);
+            repository.DeleteProduct(product1.Id);
+            Assert.AreEqual(1, repository.GetAllProduct().Count);
         }
 
         [TestMethod]
         public void GetEmptyProductListTest()
         {
-            repository.GetAllProduct().Clear();
             Exception ex = Assert.ThrowsException<Exception>(() => repository.GetAllProduct());
             Assert.AreSame(ex.Message, "There's no products");
         }
@@ -74,7 +70,6 @@ namespace DataUnitTests
         [TestMethod]
         public void GetNonExistingProductTest()
         {
-            repository.GetAllProduct().Clear();
             Exception ex = Assert.ThrowsException<Exception>(() => repository.GetProductById(1));
             Assert.AreSame(ex.Message, "There's no product with such id");
         }
@@ -82,19 +77,12 @@ namespace DataUnitTests
         [TestMethod]
         public void GetAvailableProductTest()
         {
-            Product product = repository.GetAllProduct().First();
-            Assert.AreEqual(4, repository.GetAvailableProducts().Count);
+            Product product = new Product(101, "Paint", 23.23);
+            repository.AddProduct(product);
+            repository.IncreaseAmountOfProduct(repository.GetProductById(product.Id), 11);
+            Assert.AreEqual(1, repository.GetAvailableProducts().Count);
             repository.ReduceAmountOfProduct(repository.GetProductById(product.Id), repository.GetProductAmountById(product.Id));
-            Assert.AreEqual(3, repository.GetAvailableProducts().Count);
-        }
-
-        [TestMethod]
-        public void GetProductQtyByIdTest()
-        {
-            Product product = repository.GetAllProduct().First();
-            int amount = repository.GetProductAmountById(product.Id);
-            repository.IncreaseAmountOfProduct(repository.GetProductById(product.Id), 1);
-            Assert.AreEqual(amount + 1, repository.GetProductAmountById(product.Id));
+            Assert.AreEqual(0, repository.GetAvailableProducts().Count);
         }
     }
 }

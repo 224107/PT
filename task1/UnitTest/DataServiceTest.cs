@@ -1,10 +1,8 @@
 using Data;
-using Data.Interfaces;
-using Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
-namespace LogicUnitTests
+namespace DataUnitTests
 {
     [TestClass]
     public class DataServiceTest

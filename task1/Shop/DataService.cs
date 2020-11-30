@@ -1,9 +1,7 @@
-﻿using Data;
-using Data.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace Logic
+namespace Data
 {
     public class DataService
     {

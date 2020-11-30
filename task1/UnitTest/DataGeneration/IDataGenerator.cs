@@ -1,4 +1,5 @@
-﻿namespace Data.Interfaces
+﻿using Data;
+namespace DataUnitTests
 {
     public interface IDataGenerator
     {

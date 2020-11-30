@@ -1,9 +1,8 @@
 ﻿using Data;
-using Data.Interfaces;
 using System;
 using System.Collections.Generic;
 
-namespace Logic
+namespace DataUnitTests
 {
     public class CustomerRepository : ICustomer
     {

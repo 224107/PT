@@ -1,11 +1,10 @@
 ﻿using Data;
-using Data.Interfaces;
 using Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 
-namespace DataUnitTests
+namespace LogicUnitTests
 {
     [TestClass]
     public class EventRepositoryTest
@@ -14,7 +13,6 @@ namespace DataUnitTests
         private IProduct productRepository;
         private IEvent eventRepository;
         private DataContext data;
-        private IDataGenerator generator;
 
         [TestInitialize]
         public void Initialize()
@@ -23,33 +21,34 @@ namespace DataUnitTests
             customerRepository = new CustomerRepository(data);
             productRepository = new ProductRepository(data);
             eventRepository = new EventRepository(data);
-            generator = new FixedExampleData();
-            //generator = new RandomExampleData();
-            generator.GenerateData(data);
         }
 
         [TestMethod]
         public void AddEventTest()
         {
-            Customer customer = customerRepository.GetAllCustomers().First();
+            Customer customer = new Customer(101, "Matt", "Knox");
             Sale sale = new Sale(customer, DateTime.Today, productRepository.GetProductsState());
             eventRepository.AddEvent(sale);
-            Assert.AreEqual(5, eventRepository.GetAllEvents().Count);
+            Assert.AreEqual(1, eventRepository.GetAllEvents().Count);
         }
 
         [TestMethod]
         public void DeleteEventTest()
         {
+            Customer customer = new Customer(101, "Matt", "Knox");
+            Sale sale = new Sale(customer, DateTime.Today, productRepository.GetProductsState());
+            Supply supply = new Supply(DateTime.Today, productRepository.GetProductsState());
+            eventRepository.AddEvent(sale);
+            eventRepository.AddEvent(supply);
             Event _event = eventRepository.GetAllEvents().First();
-            Assert.AreEqual(4, eventRepository.GetAllEvents().Count);
+            Assert.AreEqual(2, eventRepository.GetAllEvents().Count);
             eventRepository.DeleteEvent(_event);
-            Assert.AreEqual(3, eventRepository.GetAllEvents().Count);
+            Assert.AreEqual(1, eventRepository.GetAllEvents().Count);
         }      
 
         [TestMethod]
         public void GetEmptyEventListTest()
         {
-            eventRepository.GetAllEvents().Clear();
             Exception ex = Assert.ThrowsException<Exception>(() => eventRepository.GetAllEvents());
             Assert.AreSame(ex.Message, "There's no events");
         }

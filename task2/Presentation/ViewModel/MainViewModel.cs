@@ -5,8 +5,9 @@ using Presentation.View;
 
 namespace Presentation.ViewModel
 {
-    class MainViewModel : BaseViewModel
+    public class MainViewModel : BaseViewModel
     {
+        public BaseViewModel selectedViewModel;
         public RelayCommand ToCustomerCommand { get; set; }
         public RelayCommand ToProductCommand { get; set; }
         public RelayCommand ToEventCommand { get; set; }
@@ -17,23 +18,42 @@ namespace Presentation.ViewModel
             ToEventCommand = new RelayCommand(ToEvent);
         }
 
-        void ToCustomer(object parameter)
+        public void ToCustomer(object parameter)
         {
-            var win = new CustomerView();
-            win.Show();
+
+            if (parameter == null)
+            {
+                selectedViewModel = new CustomerViewModel();
+            }
+            else
+            {
+                var win = new CustomerView();
+                win.Show();
+            }
         }
 
-        void ToProduct(object parameter)
+        public void ToProduct(object parameter)
         {
-            var win = new ProductView();
-            win.Show();
+            if (parameter == null){
+                selectedViewModel = new ProductViewModel();
+            }
+            else
+            {
+                var win = new ProductView();
+                win.Show();
+            }           
         }
-        void ToEvent(object parameter)
+        public void ToEvent(object parameter)
         {
-            var win = new EventView();
-            win.Show();
+            if (parameter == null)
+            {
+                selectedViewModel = new EventViewModel();
+            }
+            else
+            {
+                var win = new EventView();
+                win.Show();
+            }           
         }
-
-
     }
 }

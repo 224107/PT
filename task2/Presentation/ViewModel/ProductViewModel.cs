@@ -10,7 +10,7 @@ using Data.Repositories;
 
 namespace Presentation.ViewModel
 {
-    class ProductViewModel : BaseViewModel
+    public class ProductViewModel : BaseViewModel
     {
 
         #region ATTRIBUTES

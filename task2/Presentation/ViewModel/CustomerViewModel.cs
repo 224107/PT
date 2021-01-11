@@ -9,7 +9,7 @@ using Data.Repositories;
 
 namespace Presentation.ViewModel
 {
-    class CustomerViewModel : BaseViewModel
+    public class CustomerViewModel : BaseViewModel
     {
         #region ATTRIBUTES
         ICustomerService service;

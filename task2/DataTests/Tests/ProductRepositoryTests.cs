@@ -68,7 +68,7 @@ namespace DataTests
         [TestMethod]
         public void GetProductAmountTest()
         {
-            Assert.AreEqual(10, _ProductRepository.GetProductAmount(1));
+            Assert.AreEqual(9, _ProductRepository.GetProductAmount(1));
         }
 
         [TestMethod]

@@ -35,7 +35,7 @@ namespace Data.Repositories
         {
             using (var db = new ShopDataContext(ShopDataConnection))
             {
-                return db.Customers.Select(client => client).ToList();
+                return db.Customers.Select(customer => customer).ToList();
             }
         }
         public Customer GetLastCustomer()
@@ -63,7 +63,7 @@ namespace Data.Repositories
         {
             using(var db = new ShopDataContext(ShopDataConnection))
             {
-                Customer customerDelete = db.Customers.FirstOrDefault(client => client.id.Equals(id));
+                Customer customerDelete = db.Customers.FirstOrDefault(customer => customer.id.Equals(id));
 
                 if (customerDelete != null)
                 {

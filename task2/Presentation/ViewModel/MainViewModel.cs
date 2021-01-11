@@ -21,38 +21,39 @@ namespace Presentation.ViewModel
         public void ToCustomer(object parameter)
         {
 
-            if (parameter == null)
-            {
-                selectedViewModel = new CustomerViewModel();
-            }
-            else
+            if(parameter == null)
             {
                 var win = new CustomerView();
                 win.Show();
             }
+            else if(parameter.ToString() == "Customer")
+            {
+                selectedViewModel = new CustomerViewModel();
+            }
         }
 
         public void ToProduct(object parameter)
-        {
-            if (parameter == null){
-                selectedViewModel = new ProductViewModel();
-            }
-            else
+        { 
+            if (parameter == null)
             {
                 var win = new ProductView();
                 win.Show();
+            }
+            else if(parameter.ToString() == "Product")
+            {
+                selectedViewModel = new ProductViewModel();
             }           
         }
         public void ToEvent(object parameter)
         {
             if (parameter == null)
             {
-                selectedViewModel = new EventViewModel();
-            }
-            else
-            {
                 var win = new EventView();
                 win.Show();
+            }
+            else if(parameter.ToString() == "Event")
+            {
+                selectedViewModel = new EventViewModel();
             }           
         }
     }

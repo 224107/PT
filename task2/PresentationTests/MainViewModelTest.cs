@@ -19,7 +19,7 @@ namespace PresentationTest
         {
             MainViewModel mainViewModel = new MainViewModel();
 
-            mainViewModel.ToCustomer(null);
+            mainViewModel.ToCustomer("Customer");
             Assert.IsInstanceOfType(mainViewModel.selectedViewModel, typeof(CustomerViewModel));
             
         }
@@ -29,7 +29,7 @@ namespace PresentationTest
         {
             MainViewModel mainViewModel = new MainViewModel();
 
-            mainViewModel.ToProduct(null);
+            mainViewModel.ToProduct("Product");
             Assert.IsInstanceOfType(mainViewModel.selectedViewModel, typeof(ProductViewModel));
         }
 
@@ -38,7 +38,7 @@ namespace PresentationTest
         {
             MainViewModel mainViewModel = new MainViewModel();
 
-            mainViewModel.ToEvent(null);
+            mainViewModel.ToEvent("Event");
             Assert.IsInstanceOfType(mainViewModel.selectedViewModel, typeof(EventViewModel));
         }
     }
